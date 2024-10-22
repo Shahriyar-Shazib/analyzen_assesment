@@ -53,16 +53,20 @@
             
                 @csrf
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
-                    <input type="text" class="form-control" name ="name" aria-label="Enter your name" aria-describedby="inputGroup-sizing-default">
+                    <span class="input-group-text" id="name-field">Name</span>
+                    <input type="text" class="form-control" id = "name-field" name ="name" aria-label="Enter your name" aria-describedby="inputGroup-sizing-default" required>
                 </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">@</span>
-                    <input type="text" class="form-control" name ="email" aria-label="Enter your email" aria-describedby="inputGroup-sizing-default">
+                    <span class="input-group-text" id="email-field">@</span>
+                    <input type="text" class="form-control" id = "email-field" name ="email" aria-label="Enter your email" aria-describedby="inputGroup-sizing-default" required>
                 </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="inputGroup-sizing-default">password</span>
-                    <input type="text" class="form-control" name ="password" aria-label="Enter your email" aria-describedby="inputGroup-sizing-default">
+                    <span class="input-group-text" id="password-field">password</span>
+                    <input type="text" class="form-control"  id = "password-field" name ="password" aria-label="Enter your email" aria-describedby="inputGroup-sizing-default" required>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="picture-field">Imsge</span>
+                    <input type="file" src=""  class="form-control"  id = "picture-field" name ="picture" alt="">
                 </div>
         </div>
         <div class="modal-footer">
@@ -75,8 +79,17 @@
 </div>
 @section('js')
    <script>
-    $('#user_create_form')on('submit',function(event){
+    $('#user_create_form').submit(function() {
         event.preventDefault();
+
+        var name = $('#name-field').val()
+        var email = $('#email-field').val()
+        var password = $('#password-field').val()
+        if(name == '' || email == '' || password == ''){
+            alert("fillup all input field")
+        }else{
+
+        }
         alert(123);
     })
    </script>
