@@ -48,7 +48,7 @@
         <h5 class="modal-title" id="exampleModalLabel">User Create</h5>
        
       </div>
-      <form action="" id="user_create_form" method="post">
+      <form action="" id="user_create_form" method="post" enctype="multipart/form-data">
         <div class="modal-body">
             
                 @csrf
@@ -65,7 +65,7 @@
                     <input type="text" class="form-control"  id = "password-field" name ="password" aria-label="Enter your email" aria-describedby="inputGroup-sizing-default" required>
                 </div>
                 <div class="input-group mb-3">
-                    <span class="input-group-text" id="picture-field">Imsge</span>
+                    <span class="input-group-text" id="picture-field">Image</span>
                     <input type="file" src=""  class="form-control"  id = "picture-field" name ="picture" alt="">
                 </div>
         </div>
@@ -88,6 +88,32 @@
         if(name == '' || email == '' || password == ''){
             alert("fillup all input field")
         }else{
+            $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                var formData = new FormData($('#user_create_form')[0]);
+                var fileInput = $('#picture-field')[0].files[0];
+                if (fileInput) {
+                    formData.append('picture', fileInput);  // Ensure the file is correctly appended
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('user.save') }}",
+                    data: formData,
+                    processData: false, // Required for sending FormData
+                    contentType: false, // Required for sending FormData
+                    dataType: 'json',
+                    success: function(result) {
+                        console.log(result)
+                        
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                        $('#saveBtn').html('Save');
+                    }
+                });
 
         }
         alert(123);

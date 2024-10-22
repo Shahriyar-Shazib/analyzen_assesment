@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('user')->group(function(){
         Route::get('/user-list', [UserController::class, 'userList'])->name("user.list");
         Route::get('/user-create', [UserController::class, 'userCreate'])->name("user.create");
+        Route::post('/user-save', [UserController::class, 'userSave'])->name("user.save");
     });
 });
 
