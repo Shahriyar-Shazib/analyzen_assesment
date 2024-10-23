@@ -5,10 +5,19 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Auth;
+use App\Services\UserServiceInterface;
+
 class userController extends Controller
 {
+    protected $userService;
+
+    public function __construct(UserServiceInterface $userService) {
+        $this->userService = $userService;
+    }
+
     public function userList(){
-        $users = User::where('id', '!=', Auth::user()->id)->get();
+        $users = $this->userService->listUsers();
+        // $users = User::where('id', '!=', Auth::user()->id)->get(); //this is for without service class
         return view('users.userIndex',compact('users'));
     }
     public function userSave(Request $request){
