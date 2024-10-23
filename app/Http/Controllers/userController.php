@@ -5,6 +5,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
+use App\Models\Address;
 use Auth;
 use App\Services\UserServiceInterface;
 
@@ -143,5 +144,16 @@ class userController extends Controller
         // } else {
         //     return redirect()->back()->with('error', 'User not found.');
         // }
+    }
+    public function viewAddress($id){
+        $user_address = Address::where('user_id', $id)->get();
+        return $user_address;
+    }
+    public function addAddress(Request $request){
+        Address::insert([
+            'user_id' => $request->user_id,
+            'address' =>$request->address,
+        ]);
+        return response()->json(['success' => 'Data saved successfully.']);
     }
 }

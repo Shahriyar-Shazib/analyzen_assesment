@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Events\UserAddressSaved;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 
@@ -21,12 +22,15 @@ class UserService implements UserServiceInterface {
             $file_location = $file->store('pro_picture', 'public');
         }
 
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'picture' =>  $file_location,
         ]);
+        $address = $data['address'];
+        event(new UserAddressSaved($user, $address));
+        return $user;
     }
 
     public function updateUser($id, $data) {
@@ -43,6 +47,9 @@ class UserService implements UserServiceInterface {
         $user->email = $data['email']; 
         $user->update();
 
+        $address = $data['address'];
+        event(new UserAddressSaved($user, $address));
+        
         return null;
     }
 

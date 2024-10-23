@@ -43,6 +43,7 @@ class UserServiceTest extends TestCase
             'email' => 'testuser@example.com',
             'password' => 'password',
             'picture' => UploadedFile::fake()->image('profile.jpg'),
+            'address' => 'Dhaka Dhaka'
         ];
 
         $user = $this->userService->addUser($data);
@@ -67,6 +68,7 @@ class UserServiceTest extends TestCase
             'name' => 'Updated Name',
             'email' => 'updatedemail@example.com',
             'picture' => $newProfilePicture,
+            'address' => 'Dhaka Dhaka'
         ];
     
         $this->userService->updateUser($user->id, $data);

@@ -25,6 +25,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/deleted-user-list', [UserController::class, 'deletedUserList'])->name("deleted.user.list");
         Route::get('/restore-user/{id}', [UserController::class, 'restoreUser'])->name("restore.user");
         Route::get('/user/force-delete/{id}', [UserController::class, 'userForceDelete'])->name('user.forceDelete');
+        Route::get('/user/view-address/{id}', [UserController::class, 'viewAddress'])->name('user.address');
+        Route::post('/user/add-address', [UserController::class, 'addAddress'])->name('user.address.add');
     });
 });
 

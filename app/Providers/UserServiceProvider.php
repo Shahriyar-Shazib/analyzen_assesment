@@ -11,6 +11,11 @@ class UserServiceProvider extends ServiceProvider
     /**
      * Register services.
      */
+    protected $listen = [
+        UserAddressSaved::class => [
+            SaveUserAddresses::class,
+        ],
+    ];
     public function register(): void
     {
         $this->app->bind(UserServiceInterface::class, UserService::class);
