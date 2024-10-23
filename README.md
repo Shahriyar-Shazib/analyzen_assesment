@@ -1,9 +1,15 @@
 Project installation guideline :
+
     *php: ^8.2.*
+
     laravel/framework": "^11.9"
+
     *database: mysql 
+
     *Composer version 2.7.9
+
     *npm 10.8.2
+    
         ->first you have to istall xampp which has php version avobe 8.2
 
         ->then ypu have to install composer 
