@@ -3,54 +3,83 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Auth;
 
 class UserService implements UserServiceInterface {
+
     public function listUsers() {
-        return User::where('id', Auth::user()->id)->get();
+        return User::where('id', '!=', Auth::user()->id)->get();
     }
 
-    public function addUser(array $data) {
-        return User::create($data);
-    }
+    public function addUser($data) {
+        // return $data['name'] ;
+         $file_location = null; 
 
-    public function updateUser(int $id, array $data) {
-        $user = User::find($id);
-        if ($user) {
-            $user->update($data);
-            return $user;
+        if ($data['picture']) {
+            $file = $data['picture'];
+            $file_location = $file->store('pro_picture', 'public');
         }
+
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'picture' =>  $file_location,
+        ]);
+    }
+
+    public function updateUser($id, $data) {
+     
+        $user = User::find($data['user_id']);
+
+        if ($data['picture']) {
+            $file = $data['picture'];
+            $file_location = $file->store('pro_picture', 'public');
+            $user->picture = $file_location; 
+        }
+
+        $user->name = $data['name']; 
+        $user->email = $data['email']; 
+        $user->update();
+
         return null;
     }
 
-    public function deleteUser(int $id) {
+    public function deleteUser($id) {
         $user = User::find($id);
-        if ($user) {
-            $user->delete();
-            return true;
-        }
-        return false;
-    }
 
-    public function restoreUser(int $id) {
-        $user = User::withTrashed()->find($id);
-        if ($user && $user->trashed()) {
-            $user->restore();
-            return true;
+        if($user){
+            $user->delete();  
         }
+
         return false;
     }
 
     public function getTrashedUsers() {
+       
         return User::onlyTrashed()->get();
     }
 
-    public function forceDeleteUser(int $id) {
+    public function restoreUser($id) {
+
         $user = User::withTrashed()->find($id);
+
         if ($user) {
-            $user->forceDelete();
-            return true;
+            $user->restore();
         }
+
+        return false;
+    }
+
+    public function forceDeleteUser($id) {
+        
+        $user = User::withTrashed()->find($id);
+
+        if ($user) {
+            $user->forceDelete(); // Permanently delete the user
+        }
+
         return false;
     }
 }

@@ -152,6 +152,7 @@
                         
                     },
                     error: function(data) {
+                        alert('Error:', data)
                         console.log('Error:', data);
                         $('#saveBtn').html('Save');
                     }
@@ -191,6 +192,7 @@
                  window.location.href = "{{ route('user.list') }}";
             },
             error: function(data) {
+                alert('Error:', data)
                 console.log('Error:', data);
                 $('#saveBtn').html('Save');
             }

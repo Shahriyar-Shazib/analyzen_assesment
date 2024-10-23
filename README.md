@@ -1,5 +1,6 @@
 Project installation guideline :
     *php: ^8.2.*
+    laravel/framework": "^11.9"
     *database: mysql 
     *Composer version 2.7.9
     *npm 10.8.2
@@ -28,3 +29,10 @@ Project installation guideline :
         for testing purpose one user is created
         email:admin@gmail.com
         password:11111111
+        
+        for the 2nd assessment 
+        all of the previous functionality moved into the service class with maintaining interface
+        and for the unite tasting run this command:
+            ->php artisan test --filter=UserServiceTest 
+    
+        
